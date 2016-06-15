@@ -1,0 +1,24 @@
+{
+ "uri": "https://api102225live.gateway.akana.com:443/v4/geocode/geocode/{type}?address={address}",
+ "substitutions": [
+    { "name": "type", "array": ["json", "xml"]},
+    { "name": "address", "array": ["Boulder, CO", "Fort Collins, CO", "Chicago, IL"]}
+ ],
+ 
+  "scope": "Public",
+  "clients": [
+    { "name": "License-restricted, T3 Bronze",
+      "appkey": "rcjoohyc-66K9Xkbf93E6XiejABcbjd2f",
+      "appsecret": "785119ba1e401abe50c19b1d4371523b708bee9b" },
+    { "name": "License-restricted, T2 Silver",
+      "appkey": "rcjoohyc-32kr0j22seG8jpjdX5TCWVTk",
+      "appsecret": "321e1732ec680c6defa57f392ac41861fae7ee71" }
+   ],
+  "max": 20,
+  "threads": 2,
+  "oauth": {
+      "baseuri": "https://rcjoohyc.apiportal.akana.com",
+      "tokenuri": "/oauth/oauth20/token",
+      "scope": "Public"
+    }
+}
