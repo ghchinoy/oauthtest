@@ -11,14 +11,18 @@ This small program calls API endpoints after obtaining an OAuth2 access token vi
 
 ## Usage of oauthtest
 
+flags:
+
 * `max` - max amt of calls to make, default `20`
 * `threads` - threads to use, default `2` (not implemented at this time)
 * `config` - required path to config file
+* `debug` - output debug statements
 
 ### Example usage
 
 ```
-bin/oauthtest
+bin/oauthtest --config config/local.json
+```
 
 ## Configuration file
 
