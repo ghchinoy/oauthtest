@@ -5,10 +5,15 @@ stages:
 install-go:
   stage: install-environment
   script:
+    - curl https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz 2>/dev/null > go1.6.2.linux-amd64.tar.gz
+    - tar -C /usr/local -xzf go1.6.2.linux-amd64.tar.gz
+    - (if [[ "$(go version)" == *"go version go1.6"* ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed"; exit -1; fi);
+    - go env
+    - which go
 
-before_script:
-- apt-get update -qq && apt-get install -y -qq golang
-- go get github.com/constabulary/gb/...
+#before_script:
+#- apt-get update -qq && apt-get install -y -qq golang
+#- go get github.com/constabulary/gb/...
 
 build_with_gb:
   stage: build
