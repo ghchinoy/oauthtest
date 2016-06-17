@@ -8,6 +8,9 @@ stages:
   - install-environment
   - build
 
+before_script:
+  - apt-get update -y -qq
+
 install-go:
   stage: install-environment
   script:
@@ -25,8 +28,8 @@ install-go:
 build_with_gb:
   stage: build
   script:
-    - ls $CURRENT_BUILD_PATH
-    - ls $HOME
+    - ls -la $CURRENT_BUILD_PATH
+    - ls -la $HOME
     - (if [[ "$(go version)" == *"go version go1.6"* ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed"; exit -1; fi);
     - cd ${CURRENT_BUILD_PATH}
     - go get github.com/constabulary/gb/...
