@@ -11,7 +11,7 @@ stages:
 install-go:
   stage: install-environment
   script:
-    - tree /builds/apihussain1/oauthtest
+    - ls /builds/apihussain1/oauthtest
     - export CURRENT_BUILD_PATH=${pwd}
     - echo $PATH
     - mkdir -p $HOME/golang
