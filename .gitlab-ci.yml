@@ -19,6 +19,7 @@ install-go:
     - export GOROOT=$HOME/golang/go
     - export GOPATH=$HOME/gopath
     - export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    - go version
     - (if [[ "$(go version)" == *"go version go1.6"* ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed"; exit -1; fi);
 
 build_with_gb:
