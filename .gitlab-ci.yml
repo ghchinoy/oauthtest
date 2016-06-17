@@ -15,13 +15,14 @@ install-go:
   stage: install-environment
   script:
     - export CURRENT_BUILD_PATH=${pwd}
-    - ls $CURRENT_BUILD_PATH
+    - ls -la $CURRENT_BUILD_PATH
     - mkdir -p $HOME/golang && mkdir -p $HOME/gopath
     - curl https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz 2>/dev/null > go1.6.2.linux-amd64.tar.gz
     - tar -C $HOME/golang -xzf go1.6.2.linux-amd64.tar.gz
     - export GOROOT=$HOME/golang/go
     - export GOPATH=$HOME/gopath
     - export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    - ls -la $HOME
     - go version
     - (if [[ "$(go version)" == *"go version go1.6"* ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed"; exit -1; fi);
 
