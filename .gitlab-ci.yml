@@ -4,6 +4,8 @@
 #
 # From go build example: https://gitlab.com/gitlab-org/gitlab-ce/blob/76109d754e167e05db7897f6b89a36b2fadffc65/doc/ci/examples/test-golang-application.md
 
+image: golang:1.6
+
 stages:
   - install-environment
   - build
