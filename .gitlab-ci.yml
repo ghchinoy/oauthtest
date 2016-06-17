@@ -12,10 +12,8 @@ stages:
 build_with_gb:
   stage: build
   script:
-    - go version
-    - which go
     - (if [[ "$(go version)" == *"go version go1.6"* ]]; then echo "✓ Go binary installed!"; else echo "Go binary not installed"; exit -1; fi);
-    - cd ${CURRENT_BUILD_PATH}
+    - cd /builds/apihussain1/oauthtest
     - go get github.com/constabulary/gb/...
     - ls -la .
     - gb build
