@@ -1,6 +1,8 @@
 #before_script:
 #- apt-get update -qq && apt-get install -y -qq golang
 #- go get github.com/constabulary/gb/...
+#
+# From go build example: https://gitlab.com/gitlab-org/gitlab-ce/blob/76109d754e167e05db7897f6b89a36b2fadffc65/doc/ci/examples/test-golang-application.md
 
 stages:
   - install-environment
@@ -9,6 +11,7 @@ stages:
 install-go:
   stage: install-environment
   script:
+    - ls /builds/apihussain1/oauthtest
     - export CURRENT_BUILD_PATH=${pwd}
     - echo $PATH
     - mkdir -p $HOME/golang
@@ -29,4 +32,5 @@ build_with_gb:
   stage: build
   script:
     - cd /builds/apihussain1/oauthtest
+    - go get github.com/constabulary/gb/...
     - gb build
