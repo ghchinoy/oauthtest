@@ -14,6 +14,8 @@ import (
 	"time"
 
 	"oauthtest/helper"
+
+	"github.com/fatih/color"
 )
 
 // makeAPICalls takes
@@ -65,7 +67,13 @@ func callEndpointWithAuthzHeader(endpoint, token string) error {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	log.Printf("%s %v %s\n", resp.Status, len(body), endpoint)
+	servererr := color.New(color.FgRed).SprintFunc()
+	if resp.StatusCode != 200 {
+		log.Printf("%s %v %s\n", servererr(resp.Status), len(body), endpoint)
+	} else {
+		log.Printf("%s %v %s\n", resp.Status, len(body), endpoint)
+	}
+
 	//log.Printf("%s", body)
 	return nil
 }
@@ -102,7 +110,8 @@ func obtainOAuthTokens(config helper.Configuration) {
 			log.Fatalln("Can't unmarshal json response from token endpoint", err)
 			return
 		}
-		log.Printf("Token obtained (%s): %s", v.Name, token.AccessToken)
+		info := color.New(color.FgGreen).SprintFunc()
+		log.Printf("Token obtained (%s): %s", v.Name, info(token.AccessToken))
 		// get the original array, the one in this loop is a copy
 		config.Clients[k].AccessToken = token
 
