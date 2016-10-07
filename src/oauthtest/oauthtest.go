@@ -155,37 +155,15 @@ func parseConfig(configfile string) (helper.Configuration, error) {
 func init() {
 
 	//helpflag := flag.String("help", "", "Display help info.")
-	maxflag := flag.Int("max", 20, "Maximum amount API calls to make")
+	// max is 0
+	maxflag := flag.Int("max", 0, "Maximum amount API calls to make")
 	threadsflag := flag.Int("threads", 2, "Maximum amount of threads to use")
 	configflag := flag.String("config", "", "json config file to use")
 	debugflag := flag.Bool("debug", false, "show debug statements")
 	flag.Parse()
-	maxcalls = int(*maxflag)
 	threads = int(*threadsflag)
 	configfile = string(*configflag)
 	debug = bool(*debugflag)
-
-	/*
-		// Defaults
-		// API Info
-		apiBaseURI = "https://nd.akana.dev:9982"
-		apis = []string{
-			"/v4/geocode/city?address=",
-			"/v4/geocode/address?address=",
-		}
-		locations = []string{"Boulder, CO", "Fort Collins, CO", "Chicago, IL", "Los Angeles, CA", "Ventura, CA", "Santa Monica, CA"}
-		scope = "Public"
-		//maxcalls = 20
-		//threads = 2
-
-		// Client Info
-		clients = []helper.Client{
-			{Name: "License-restricted, T3 Gold", AppKey: "enterpriseapi-AnBefYqhBHF76Onxl6CLjD5z", AppSecret: "cbaaac6e80d07961612971fd257bfd27f8954c70"},
-			{Name: "License-restricted, T2 Silver", AppKey: "enterpriseapi-6XWQII2hKOJAvbGzsqdxjy7E", AppSecret: "d5be0d59c2a5abef7fb13711c908ccd900339b06"},
-			{Name: "License-restricted, T1 Bronze", AppKey: "enterpriseapi-4yPiqABBNwO59QssNRjyYJ7C", AppSecret: "4f6ac688fdfb10fabc4f12b77fa536bf276efd96"},
-			{Name: "Internal Tester", AppKey: "enterpriseapi-1eVguH9dlsb7rKEnQ1Baof7R", AppSecret: "06c6dc757e0a600513f6ee11c4bf142532b58d62"},
-		}
-	*/
 
 	// Config file, override defaults
 	// if configfile exists and is parsable, override defaults with config info
@@ -216,6 +194,14 @@ func init() {
 		*/
 		// DEBUG ends here
 	}
+
+	// if config doesn't have max calls specified, set from flag
+	climaxcalls := int(*maxflag)
+	if climaxcalls > 0 {
+		maxcalls = climaxcalls
+		log.Printf("Setting max calls from command-line: %v", maxcalls)
+	}
+
 }
 
 // TODO clarify code, then incorporate into apipong
