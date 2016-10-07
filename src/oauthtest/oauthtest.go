@@ -157,13 +157,14 @@ func init() {
 	//helpflag := flag.String("help", "", "Display help info.")
 	// max is 0
 	maxflag := flag.Int("max", 0, "Maximum amount API calls to make")
-	threadsflag := flag.Int("threads", 2, "Maximum amount of threads to use")
+	threadsflag := flag.Int("threads", 0, "Maximum amount of threads to use")
 	configflag := flag.String("config", "", "json config file to use")
 	debugflag := flag.Bool("debug", false, "show debug statements")
 	flag.Parse()
-	threads = int(*threadsflag)
 	configfile = string(*configflag)
 	debug = bool(*debugflag)
+	maxcalls = int(*maxflag)
+	threads = int(*threadsflag)
 
 	// Config file, override defaults
 	// if configfile exists and is parsable, override defaults with config info
@@ -176,8 +177,13 @@ func init() {
 			flag.Usage()
 			os.Exit(1)
 		}
-		maxcalls = configuration.Max
-		threads = configuration.Threads
+		// if command-line max or threads flag > 0, ignore configuration file
+		if maxcalls == 0 {
+			maxcalls = configuration.Max
+		}
+		if threads == 0 {
+			threads = configuration.Threads
+		}
 		if debug {
 			log.Println("Config", configuration)
 		}
@@ -195,11 +201,12 @@ func init() {
 		// DEBUG ends here
 	}
 
-	// if config doesn't have max calls specified, set from flag
-	climaxcalls := int(*maxflag)
-	if climaxcalls > 0 {
-		maxcalls = climaxcalls
-		log.Printf("Setting max calls from command-line: %v", maxcalls)
+	// set defaults
+	if maxcalls == 0 {
+		maxcalls = 20
+	}
+	if threads == 0 {
+		threads = 2
 	}
 
 }
