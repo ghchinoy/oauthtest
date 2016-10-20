@@ -1,0 +1,40 @@
+#!/bin/bash
+# Go cross-compile 
+# Usually, only the VERSION changes.
+# The OSLIST and ARCHLIST can change, as well.
+# No need to change anything below ####
+# 
+
+APPNAME=oauthtest
+VERSION=1.0.2
+
+OSLIST=(linux darwin windows)
+ARCHLIST=(amd64 386)
+
+####
+
+DISTDIR=bin
+#DISTDIR=dist/${VERSION}
+#mkdir -p ${DISTDIR}
+
+echo "Compiling version ${VERSION}:"
+for os in ${OSLIST[*]}; do
+  for arch in ${ARCHLIST[*]}; do
+  	EXT=""
+  	if [[ ${os} == "windows" ]]; then
+  		EXT=".exe"
+  	fi
+  	GOOS=${os}
+  	GOARCH=${arch}
+  	echo "Compiling ${GOOS}/${GOARCH}..."
+  	#OUTPUTFILE=${DISTDIR}/${APPNAME}-${VERSION}-${GOOS}.${GOARCH}${EXT}
+    GOOS=${GOOS} GOARCH=${GOARCH} gb build 
+    #file ${OUTPUTFILE}
+  done
+done
+# for homebrew distribution, rename darwin.amd64, gz, shasum
+cp -rp ${DISTDIR}/${APPNAME}-darwin-amd64 ${DISTDIR}/${APPNAME}
+#mv ${DISTDIR}/${APPNAME}-${VERSION}-darwin.amd64 ${DISTDIR}/${APPNAME}
+cd ${DISTDIR}
+tar -czf ${APPNAME}-${VERSION}.tar.gz ${APPNAME}
+shasum -a 256 ${APPNAME}-${VERSION}.tar.gz
