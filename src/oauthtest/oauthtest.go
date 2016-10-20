@@ -217,8 +217,6 @@ func init() {
 
 // TODO clarify code, then incorporate into apipong
 func main() {
-
 	obtainOAuthTokens(configuration)
 	makeAPICalls(maxcalls, threads)
-
 }
