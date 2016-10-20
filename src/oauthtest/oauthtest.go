@@ -199,6 +199,10 @@ func init() {
 			os.Exit(1)
 		*/
 		// DEBUG ends here
+	} else {
+		fmt.Println("Can't find config file. Please use the --config flag to specify the location of a configuration json file.")
+		flag.Usage()
+		os.Exit(1)
 	}
 
 	// set defaults
