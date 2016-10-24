@@ -26,7 +26,7 @@ bin/oauthtest --config config/local.json
 
 ## Configuration file
 
-_Please note, the config file format has changed slightly between v.1.x and v.2.x_
+_Please note, the config file format has changed slightly between v.1.x and v.2.x, with the major change that a single file can now refer to multiple profiles._
 
 Example of configuration file, below, containing two profiles, `default` and `saas`.
 
@@ -76,7 +76,7 @@ The default path for a config file is `$HOME/.akana/oauthtest.json`
 }
 ```
 
-Sample config files are also in the `config` directory.
+Sample config files are in the `config` directory.
 
 ## Known Issues
 
