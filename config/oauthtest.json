@@ -1,0 +1,94 @@
+{
+    "default": {
+        "uri": "https://nd.akana.dev:9982/v4/geocode/{endpoint}?address={address}",
+        "clients": [
+            {
+                "name": "License-restricted, T3 Gold",
+                "appkey": "enterpriseapi-AnBefYqhBHF76Onxl6CLjD5z",
+                "appsecret": "cbaaac6e80d07961612971fd257bfd27f8954c70"
+            },
+            {
+                "name": "License-restricted, T2 Silver",
+                "appkey": "enterpriseapi-6XWQII2hKOJAvbGzsqdxjy7E",
+                "appsecret": "d5be0d59c2a5abef7fb13711c908ccd900339b06"
+            },
+            {
+                "name": "License-restricted, T1 Bronze",
+                "appkey": "enterpriseapi-4yPiqABBNwO59QssNRjyYJ7C",
+                "appsecret": "4f6ac688fdfb10fabc4f12b77fa536bf276efd96"
+            },
+            {
+                "name": "Internal Tester",
+                "appkey": "enterpriseapi-1eVguH9dlsb7rKEnQ1Baof7R",
+                "appsecret": "06c6dc757e0a600513f6ee11c4bf142532b58d62"
+            }
+        ],
+        "substitutions": [
+            {
+                "name": "address",
+                "array": [
+                    "Boulder, CO",
+                    "Fort Collins, CO",
+                    "Chicago, IL",
+                    "Los Angeles, CA",
+                    "Ventura, CA",
+                    "Santa Monica, CA"
+                ]
+            },
+            {
+                "name": "endpoint",
+                "array": [
+                    "city",
+                    "address"
+                ]
+            }
+        ],
+        "threads": 2,
+        "max": 10,
+        "oauth": {
+            "baseuri": "http://portal.akana.dev:9980",
+            "tokenuri": "/oauth/oauth20/token",
+            "scope": "Public"
+        }
+    },
+    "saas": {
+        "uri": "https://api102225live.gateway.akana.com:443/v4/geocode/geocode/{type}?address={address}",
+        "substitutions": [
+            {
+                "name": "type",
+                "array": [
+                    "json",
+                    "xml"
+                ]
+            },
+            {
+                "name": "address",
+                "array": [
+                    "Boulder, CO",
+                    "Fort Collins, CO",
+                    "Chicago, IL"
+                ]
+            }
+        ],
+        "scope": "Public",
+        "clients": [
+            {
+                "name": "License-restricted, T3 Bronze",
+                "appkey": "rcjoohyc-66K9Xkbf93E6XiejABcbjd2f",
+                "appsecret": "785119ba1e401abe50c19b1d4371523b708bee9b"
+            },
+            {
+                "name": "License-restricted, T2 Silver",
+                "appkey": "rcjoohyc-32kr0j22seG8jpjdX5TCWVTk",
+                "appsecret": "321e1732ec680c6defa57f392ac41861fae7ee71"
+            }
+        ],
+        "max": 20,
+        "threads": 2,
+        "oauth": {
+            "baseuri": "https://rcjoohyc.apiportal.akana.com",
+            "tokenuri": "/oauth/oauth20/token",
+            "scope": "Public"
+        }
+    }
+}
