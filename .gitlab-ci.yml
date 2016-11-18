@@ -16,3 +16,10 @@ build_with_gb:
     - go get github.com/constabulary/gb/...
     - gb env
     - gb build
+    - GOOS=darwin GOARCH=amd64 gb build
+    - GOOS=linux GOARCH=amd64 gb build
+    - GOOS=windows GOARCH=amd64 gb build
+  artifacts:
+    paths:
+     - /builds/apihussain1/bin/
+    expire_in: 1 week
