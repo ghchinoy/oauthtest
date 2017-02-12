@@ -94,6 +94,7 @@ func initConfig() {
 	viper.SetConfigName("oauthtest")    // name of config file (without extension)
 	viper.AddConfigPath("$HOME/.akana") // adding home directory as first search path
 	viper.AutomaticEnv()                // read in environment variables that match
+	viper.AddConfigPath(".")            // local
 
 	if cfgFile != "" { // enable ability to specify config file via flag
 		fmt.Println("configfile: ", cfgFile)

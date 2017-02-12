@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"encoding/json"
 	"math/rand"
 	"net/url"
 	"regexp"
@@ -9,12 +10,13 @@ import (
 
 // Configuration is the struct for the config file
 type Configuration struct {
-	URI           string         `json:"uri"`
-	Clients       []Client       `json:"clients"`
-	Max           int            `json:"max"`
-	Threads       int            `json:"threads"`
-	Substitutions []Substitution `json:"substitutions"`
-	OAuth         OAuth          `json:"oauth"`
+	URI               string         `json:"uri"`
+	Clients           []Client       `json:"clients"`
+	Max               int            `json:"max"`
+	Threads           int            `json:"threads"`
+	Substitutions     []Substitution `json:"substitutions"`
+	OAuth             OAuth          `json:"oauth"`
+	AccessTokenMethod string         `json:"accesstokenmethod"` // post, get
 }
 
 // Substitution is used within the configuration structure
@@ -40,9 +42,9 @@ type Client struct {
 
 // TokenResponse represents the OAuth 2 token response object
 type TokenResponse struct {
-	AccessToken string `json:"access_token"`
-	TokenType   string `json:"token_type"`
-	ExpiresIn   int    `json:"expires_in"`
+	AccessToken string      `json:"access_token"`
+	TokenType   string      `json:"token_type"`
+	ExpiresIn   json.Number `json:"expires_in,Number"`
 }
 
 func (config Configuration) GenerateRandomURL() string {

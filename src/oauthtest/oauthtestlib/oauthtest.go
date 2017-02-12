@@ -3,12 +3,15 @@
 package oauthtestlib
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
+	"net/url"
+	"strconv"
 	"time"
 
 	"oauthtest/helper"
@@ -93,19 +96,55 @@ func ObtainOAuthTokens(config helper.Configuration, debug bool) helper.Configura
 			log.Printf("Access token present, expires: %v", v.AccessToken.ExpiresIn)
 		}
 
-		//log.Printf("Obtaining token from %s%s", config.OAuth.BaseURI, config.OAuth.TokenURI)
-		resp, err := http.Get(config.OAuth.BaseURI + config.OAuth.TokenURI +
-			"?client_id=" + v.AppKey +
-			"&client_secret=" + v.AppSecret +
-			"&scope=" + config.OAuth.Scope +
-			"&grant_type=client_credentials")
-		if err != nil {
-			log.Fatalln(err)
-			return config
+		uristr := config.OAuth.BaseURI + config.OAuth.TokenURI + "?grant_type=client_credentials"
+
+		var resp *http.Response
+		var err error
+
+		if config.AccessTokenMethod != "post" {
+			config.AccessTokenMethod = "get"
 		}
+
+		if debug {
+			log.Println("Access Token Method", config.AccessTokenMethod)
+		}
+
+		if config.AccessTokenMethod == "post" {
+			data := url.Values{}
+			data.Set("client_secret", v.AppSecret)
+			data.Set("client_id", v.AppKey)
+
+			client := &http.Client{}
+			req, _ := http.NewRequest("POST", uristr, bytes.NewBufferString(data.Encode()))
+			req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+			req.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
+			resp, err = client.Do(req)
+			if err != nil {
+				log.Fatalln(err)
+				return config
+			}
+		} else {
+			if debug {
+				log.Printf("Obtaining token from %s%s", config.OAuth.BaseURI, config.OAuth.TokenURI)
+			}
+			uristr = uristr + "&client_id=" + v.AppKey +
+				"&client_secret=" + v.AppSecret +
+				"&scope=" + config.OAuth.Scope
+			if debug {
+				log.Println(uristr)
+			}
+			resp, err = http.Get(uristr)
+			if err != nil {
+				log.Fatalln(err)
+				return config
+			}
+		}
+
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
-		//log.Printf("%s", body)
+		if debug {
+			log.Printf("%s", body)
+		}
 		var token helper.TokenResponse
 		err = json.Unmarshal(body, &token)
 		if err != nil {
