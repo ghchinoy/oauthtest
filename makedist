@@ -6,7 +6,7 @@
 # 
 
 APPNAME=oauthtest
-VERSION=2.0.0
+VERSION=2.2.0
 
 OSLIST=(linux darwin windows)
 ARCHLIST=(amd64 386)
@@ -37,4 +37,4 @@ cp -rp ${DISTDIR}/${APPNAME}-darwin-amd64 ${DISTDIR}/${APPNAME}
 #mv ${DISTDIR}/${APPNAME}-${VERSION}-darwin.amd64 ${DISTDIR}/${APPNAME}
 cd ${DISTDIR}
 tar -czf ${APPNAME}-${VERSION}.tar.gz ${APPNAME}
-shasum -a 256 ${APPNAME}-${VERSION}.tar.gz
+shasum -a 256 ${APPNAME}-${VERSION}.tar.gz > ${APPNAME}-${VERSION}.tar.gz.shasum256
